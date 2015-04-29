@@ -3,6 +3,7 @@ var reset = document.getElementById("reset");
 var pause = document.getElementById("pause");
 var time = document.querySelector("#timer");
 var seconds = 0;
+var timerSeconds;
 
 console.log(start);
 console.log(pause);
@@ -29,17 +30,24 @@ console.log(seconds);
 // })
 
 
-start.addEventListener("click", function(event){
-	setInterval(function () {
+function startTime(event){
+	timerSeconds = setInterval(function () {
 	    document.getElementById("timer").innerHTML = double(++seconds % 60);
 		}, 1000);
-})
+}
 
-reset.addEventListener("click", function(event){
+function resetTime(event){
 	setTimeout(function () {
-	    clearInterval(seconds);
+	    clearInterval(timerSeconds);
 	}, 1000);
-})
+	seconds = -1;
+}
+
+function pauseTime(event){
+	setTimeout(function () {
+	    clearInterval(timerSeconds);
+	}, 1000);
+}
 
 
 function double(value){
@@ -52,9 +60,6 @@ function double(value){
 	}
 }
 
-
-
-// start.addEventListener("click", function(event){
-// 	time.innerHTML = "Time: 12";
-// 	console.log("Hi");
-// })
+start.addEventListener("click", startTime);
+pause.addEventListener("click", pauseTime);
+reset.addEventListener("click", resetTime);
