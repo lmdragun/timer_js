@@ -5,48 +5,22 @@ var time = document.querySelector("#timer");
 var seconds = 0;
 var timerSeconds;
 
-console.log(start);
-console.log(pause);
-console.log(reset);
-console.log(time);
-console.log(seconds);
-
-// reset.addEventListener("click", function(event){
-// 	setInterval(function(){
-// 		seconds = 0;}, 1000);
-// })
-//
-// start.addEventListener("click", function(event){
-// 	setInterval(function() {
-// 		seconds++;
-// 		time.innerHTML = "Stop Watch: " + double(seconds%60);
-// 	 }, 1000);
-// })
-//
-// pause.addEventListener("click", function(event){
-// 	setInterval(function() {
-// 		time.innerHTML = "Stop Watch: " + double(seconds%60);
-// 	 }, 1000);
-// })
-
-
 function startTime(event){
-	timerSeconds = setInterval(function () {
-	    document.getElementById("timer").innerHTML = double(++seconds % 60);
-		}, 1000);
+	if(!timerSeconds){
+		timerSeconds = setInterval(function () {
+		    document.getElementById("timer").innerHTML = double(++seconds % 60);
+			}, 1000);
+	}
 }
 
 function resetTime(event){
-	setTimeout(function () {
-	    clearInterval(timerSeconds);
-	}, 1000);
-	seconds = -1;
+	timerStop();
+	seconds = 0;
+	document.getElementById("timer").innerHTML = double(seconds);
 }
 
 function pauseTime(event){
-	setTimeout(function () {
-	    clearInterval(timerSeconds);
-	}, 1000);
+	timerStop();
 }
 
 
@@ -59,6 +33,10 @@ function double(value){
 		return twoValues;
 	}
 }
+
+var timerStop = function(){ setTimeout(function () {
+		clearInterval(timerSeconds);
+}, 1000);}
 
 start.addEventListener("click", startTime);
 pause.addEventListener("click", pauseTime);
